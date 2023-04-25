@@ -4,25 +4,28 @@ import Card from 'react-bootstrap/Card';
 import { Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Services from '../Services/Services';
+import axios from "axios";
 
 
 export function AddNewTask() {
-  //class TaskData{};
+  
   var [date,setDate] = useState(new Date());
-  const [task , setTask] = useState("");
-  const [taskDate , setTaskDate] = useState(date.toLocaleDateString());
+  //const [task , setTask] = useState("");
+  //const [taskDate , setTaskDate] = useState(date.toLocaleDateString());
+  const [taskData, setTaskData] = useState({
+    task : "",
+    taskDate :""
+  });
+  const onChange = (e)=>{
+    setTaskData({...taskData,[e.target.name]:e.target.value});
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const taskData = new FormData();
-    taskData.append('task',task);
-    taskData.append('taskDate',taskDate);
-    const response = await Services.create(taskData);
-    toast.success('Task added ', {position: toast.POSITION.TOP_RIGHT});    
-    console.log(response);
-    setTask('');
-    setTaskDate('');
+    //const response = await updateTask(taskData);
+    const response = (await axios.post("http://localhost:3001/task/add",taskData)).data;
+    if(response){ toast.success('Task added ', {position: toast.POSITION.TOP_RIGHT});    }
+    console.log(response);    
   };
      
   useEffect(() => {
@@ -43,7 +46,7 @@ export function AddNewTask() {
             <Card.Body> 
               <InputGroup className="mb-3" >
                 <Col xs={11}>
-                <Form.Control   aria-label="" id='task' value={task} type="text" onChange={e=>setTask(e.target.value)}/></Col><Form.Control id='taskDate' value={taskDate} onChange={e=>setTaskDate(e.target.value)} aria-label="date" type='date'  style={{marginRight:"20px"}}/>
+                <Form.Control   aria-label="" id='task' name='task' type="text" onChange={onChange}/></Col><Form.Control id='taskDate' name='taskDate' onChange={onChange} aria-label="date" type='date'  style={{marginRight:"20px"}}/>
               </InputGroup>
             </Card.Body>
             <Card.Footer> 
