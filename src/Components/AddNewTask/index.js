@@ -13,8 +13,8 @@ export function AddNewTask() {
   //const [task , setTask] = useState("");
   //const [taskDate , setTaskDate] = useState(date.toLocaleDateString());
   const [taskData, setTaskData] = useState({
-    task : "",
-    taskDate :""
+    task : "Task to do.",
+    taskDate :date.toLocaleDateString()
   });
   const onChange = (e)=>{
     setTaskData({...taskData,[e.target.name]:e.target.value});
@@ -24,26 +24,26 @@ export function AddNewTask() {
     e.preventDefault();
     //const response = await updateTask(taskData);
     const response = (await axios.post("http://localhost:3001/task/add",taskData)).data;
-    if(response){ toast.success('Task added ', {position: toast.POSITION.TOP_RIGHT});    }
+    if(response){ toast.success('Task added ', {  position: toast.POSITION.TOP_RIGHT  });    }
     console.log(response);    
   };
      
   useEffect(() => {
         var timer = setInterval(()=>setDate(new Date()), 1000 )
         return function cleanup() {
-          <Card.Footer><p> Date : {date.toLocaleDateString()}</p></Card.Footer>
+          <Card.Footer ><p> Date : {date.toLocaleDateString()}</p></Card.Footer>
             clearInterval(timer)
         }
     });
+
   return (
   <div>
-    
-    <Container>
+    <Container style={{marginBottom:"5vh"}}>
     <Form onSubmit={handleSubmit}>
       <Row>
         <Col sm="10">
           <Card>
-            <Card.Body> 
+            <Card.Body style={{height:"11vh"}}> 
               <InputGroup className="mb-3" >
                 <Col xs={11}>
                 <Form.Control   aria-label="" id='task' name='task' type="text" onChange={onChange}/></Col><Form.Control id='taskDate' name='taskDate' onChange={onChange} aria-label="date" type='date'  style={{marginRight:"20px"}}/>
