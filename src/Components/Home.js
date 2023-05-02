@@ -8,21 +8,25 @@ import { ShowTask } from "./ShowTask";
 export const Home = ()=>{
     return(
         <>
+        
     <Header></Header>
     <div>
         <Container fluid>
           <Row>
-            <Col xs={9} >
+            <Col xs={12} >
                 <AddNewTask />
             </Col>
         </Row>
         <Row>
             <Col >
-                <ShowTask/>
+                 
             </Col>            
         </Row>
-        </Container>    
+        </Container>
+    
+           
     </div>
+    <ShowTask/>
     </>
     );
 }

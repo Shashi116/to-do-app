@@ -1,11 +1,14 @@
 import React, { useState , useEffect} from 'react';
-import { Button , Table,ButtonGroup} from 'react-bootstrap';
+import './style.css';
 import axios from "axios";
+import { Button,  Container } from 'react-bootstrap';
 
 
 export function ShowTask() {
     const [TaskList , setTaskList] = useState([]);
     const [selectedTaskId,setTaskId] = useState('');
+
+    
     
     async function getTaskList(){
        const response=await axios.get("http://localhost:3001/get/task");
@@ -17,33 +20,38 @@ export function ShowTask() {
        getTaskList();
     }
 
+
+
     useEffect(()=>{
         getTaskList();
     },[]);
   return (
-    <Table striped bordered hover size="sm">
-      <thead>
-        <tr>
-          <th style={{width:"10%"}}>Date</th>
-          <th>Task</th>
-          <th style={{width:"10%"}}>Status</th>
-          <th style={{width:"20%"}}>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
+        <>
+        <div class="container page-todo bootstrap snippets bootdeys">
+        <div class="col-sm-7 tasks">
+            <div class="task-list">
+                <h1>Tasks</h1>
       {
         TaskList.map((task)=>{
         return(         
-          <tr>
-            <td>{task.taskDate}</td>
-            <td>{task.task}</td>
-            <td>active</td>
-            <td><ButtonGroup><Button variant="danger" className="btn-sm" onClick={()=>{setTaskId(task._id)
-                                                                          deleteTask();}} >Delete</Button><Button style={{width:"8vh"}}  className="btn-sm">Edit</Button></ButtonGroup></td>
-          </tr>
+            <>
+          <div class="priority low"><span>Actives</span></div>                
+          <div class="task low">
+              <div class="desc">
+                  <div class="title">{task.task}</div>
+              </div>
+              <div class="time">
+                  <div class="date">{task.taskDate}</div>
+                 
+              </div>
+          </div>
+          <button class="btton"><i  class="icons8-trash"></i></button>
+            </>
         )})
                     }
-      </tbody>
-    </Table>
+                    </div>
+                    </div>
+                    </div>
+    </> 
   );
 }
