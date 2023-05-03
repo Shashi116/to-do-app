@@ -1,7 +1,6 @@
 import React, { useState , useEffect} from 'react';
 import './style.css';
 import axios from "axios";
-import { Button,  Container } from 'react-bootstrap';
 
 
 export function ShowTask() {
@@ -40,12 +39,14 @@ export function ShowTask() {
               <div class="desc">
                   <div class="title">{task.task}</div>
               </div>
-              <div class="time">
+              <div class="time" >
                   <div class="date">{task.taskDate}</div>
-                 
+                  <div class="date">{task.taskTime}</div>
               </div>
           </div>
-          <button class="btton"><i  class="icons8-trash"></i></button>
+          <button class="btton-1" onClick={()=>{setTaskId(task._id)
+                                                                          deleteTask();}}><i  class="icons8-trash"></i></button>
+            
             </>
         )})
                     }
